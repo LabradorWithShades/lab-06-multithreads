@@ -29,9 +29,18 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+hunter_add_package(Boost COMPONENTS log filesystem thread)
+find_package(Boost CONFIG REQUIRED COMPONENTS log log_setup filesystem thread REQUIRED)
+
+find_package(Threads REQUIRED)
+
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 add_library(${PROJECT_NAME} STATIC
   # enum your files and delete this comment
-  ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/hash_argument_finder.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/report_store.cpp
 )
 
 add_executable(demo
@@ -40,7 +49,14 @@ add_executable(demo
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third-party>"
   "$<INSTALL_INTERFACE:include>"
+)
+
+target_link_libraries(${PROJECT_NAME}
+  ${Boost_LIBRARIES}
+  Threads::Threads
+  nlohmann_json::nlohmann_json
 )
 
 target_link_libraries(demo ${PROJECT_NAME})
