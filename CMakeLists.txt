@@ -29,8 +29,9 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
-hunter_add_package(Boost COMPONENTS log filesystem thread)
-find_package(Boost CONFIG REQUIRED COMPONENTS log log_setup filesystem thread REQUIRED)
+set(Boost_USE_STATIC_LIBS ON)
+hunter_add_package(Boost COMPONENTS log filesystem system chrono thread regex date_time atomic)
+find_package(Boost CONFIG REQUIRED log log_setup filesystem system chrono thread regex date_time atomic)
 
 find_package(Threads REQUIRED)
 
@@ -48,14 +49,23 @@ add_executable(demo
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
+  ${Boost_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third-party>"
   "$<INSTALL_INTERFACE:include>"
 )
 
 target_link_libraries(${PROJECT_NAME}
-  ${Boost_LIBRARIES}
-  Threads::Threads
+  Boost::log_setup
+  Boost::log
+  Boost::filesystem
+  Boost::chrono
+  Boost::thread
+  Boost::regex
+  Boost::date_time
+  Boost::atomic
+  Boost::system
+  Boost::boost
   nlohmann_json::nlohmann_json
 )
 
