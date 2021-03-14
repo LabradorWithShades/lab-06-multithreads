@@ -1,17 +1,19 @@
 // Copyright 2020 LabradorWithShades
 // 70892548+LabradorWithShades@users.noreply.github.com
 
-#ifndef INCLUDE_HASHARGUMENTFINDER_HPP_
-#define INCLUDE_HASHARGUMENTFINDER_HPP_
+#ifndef INCLUDE_HASH_ARGUMENT_FINDER_HPP_
+#define INCLUDE_HASH_ARGUMENT_FINDER_HPP_
 
 #include <report_store.hpp>
 #include <thread>
+#include <string>
+#include <memory>
 #include <vector>
 #include <atomic>
 
 class HashArgumentFinder {
  public:
-  explicit HashArgumentFinder() noexcept;
+  HashArgumentFinder() noexcept;
 
   void startSearch(std::string fileName,
                    size_t count = std::thread::hardware_concurrency());
@@ -28,4 +30,4 @@ class HashArgumentFinder {
   bool m_started;
 };
 
-#endif  // INCLUDE_HASHARGUMENTFINDER_HPP_
+#endif  // INCLUDE_HASH_ARGUMENT_FINDER_HPP_

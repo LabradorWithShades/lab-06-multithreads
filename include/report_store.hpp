@@ -1,8 +1,8 @@
 // Copyright 2020 LabradorWithShades
 // 70892548+LabradorWithShades@users.noreply.github.com
 
-#ifndef INCLUDE_REPORT_STORE_HPP
-#define INCLUDE_REPORT_STORE_HPP
+#ifndef INCLUDE_REPORT_STORE_HPP_
+#define INCLUDE_REPORT_STORE_HPP_
 
 #include <nlohmann/json.hpp>
 #include <string>
@@ -21,4 +21,4 @@ class ReportStorage {
   mutable std::mutex m_mutex{};
 };
 
-#endif  // TEMPLATE_REPORT_STORE_HPP
+#endif  // INCLUDE_REPORT_STORE_HPP_
